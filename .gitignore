@@ -1,0 +1,11 @@
+# folders
+.gradle
+.settings
+bin
+build
+run
+
+# files
+.classpath
+.project
+*.launch
