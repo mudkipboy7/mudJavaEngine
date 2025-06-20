@@ -1,0 +1,18 @@
+// This file contains a bunch of stuff relating to modifying specific players.
+{
+	"players": [
+		/* Remember, the username is case sensitive, it must be the same capitalization-wise as it is on NameMc
+		and the like because thats what the game spits back when I ask for a player's username */
+		{
+			"username": "mudkipboy7",
+			"survival_gear_texture": "textures/models/survivalgear/pink_survival_gear.png"
+		},
+		{
+			"username": "Notch",
+			"survival_gear_texture": "textures/models/survivalgear/notch_survival_gear.png",
+			"very_special_things": [
+				"dress"
+			]
+		}
+	]
+}

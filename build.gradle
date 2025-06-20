@@ -45,6 +45,11 @@ java {
 
 jar {
     manifest {
-        attributes('Main-Class': "$mainClassName")
+        attributes(
+        "Main-Class":				mainClass,
+        "Implementation-Version"  : version,
+        "Implementation-Vendor"   : author,
+        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        )
     }
 }
