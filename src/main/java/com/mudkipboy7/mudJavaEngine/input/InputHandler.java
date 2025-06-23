@@ -44,12 +44,11 @@ public class InputHandler {
 		return propertiesOfFound.contains(true);
 	}
 
-	public boolean queryIsKeyHeld(int... keys) {
-		return queryIsKeyInState(GLFW.GLFW_PRESS, keys);
-	}
-
-	public boolean queryIsMouseButtonHeld(int... keys) {
-		return queryIsMouseButtonInState(GLFW.GLFW_PRESS, keys);
+	public boolean queryIsInputKeyPressed(InputKey key) {
+		if (key.getIsMouseKey()) {
+			return queryIsMouseButtonInState(GLFW.GLFW_PRESS, key.getGlfwValue());
+		}
+		return queryIsKeyInState(GLFW.GLFW_PRESS, key.getGlfwValue());
 	}
 
 	public long getCursor() {

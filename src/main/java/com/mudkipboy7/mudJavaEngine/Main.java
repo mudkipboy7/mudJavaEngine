@@ -11,6 +11,7 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
 import com.mudkipboy7.mudJavaEngine.input.InputHandler;
+import com.mudkipboy7.mudJavaEngine.input.InputKey;
 
 public class Main {
 	// Game name and versioning stuff
@@ -34,8 +35,9 @@ public class Main {
 		while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
 			tickGameLogic();
 			tickRendering();
-			System.out.println(input.getCursorX());
-			if (input.queryIsKeyHeld(GLFW.GLFW_KEY_0)) {
+			//System.out.println(InputKey.KEY_DOWN.getIsMouseKey());
+			//System.out.println(input.getCursorX());
+			if (input.queryIsInputKeyPressed(InputKey.KEY_JUMP)) {
 				GLFW.glfwSetWindowShouldClose(glfwWindow, true);
 
 			}

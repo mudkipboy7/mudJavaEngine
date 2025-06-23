@@ -12,8 +12,6 @@ import org.lwjgl.opengl.GL46;
 
 import com.mudkipboy7.mudJavaEngine.Main;
 
-import mudkipboy7.game.GameMain;
-
 public class Texture {
 	public static final Texture defaultTexture = new Texture("textures/test_texture.png");
 	private int id;
