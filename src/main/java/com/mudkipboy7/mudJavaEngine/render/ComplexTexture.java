@@ -10,10 +10,14 @@ public class ComplexTexture extends Texture {
 	int framesPerWidth = 0;
 	int framesPerHeight = 0;
 
-	public ComplexTexture(String path, int framesPerWidth, int framesPerHeight) {
+	public ComplexTexture(String path, int framesPerWidth, int framesPerHeight, boolean treatWhiteAsTrans) {
 		super(path);
 		this.framesPerWidth = framesPerWidth;
 		this.framesPerHeight = framesPerHeight;
+	}
+
+	public ComplexTexture(String path, int framesPerWidth, int framesPerHeight) {
+		this(path, framesPerWidth, framesPerHeight, false);
 	}
 
 	public float[] getCoordsOfFrame(int frameNum, boolean mirror) {

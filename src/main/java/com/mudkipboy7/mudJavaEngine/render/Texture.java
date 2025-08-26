@@ -17,6 +17,7 @@ public class Texture {
 	private int id;
 	private int width = 0;
 	private int height = 0;
+
 	private BufferedImage image = null;
 
 	private Texture(String path, int startX, int startY, int width, int height) {
@@ -26,12 +27,16 @@ public class Texture {
 		processBufferedImage(startX, startY);
 	}
 
+
 	public Texture(String path) {
 		image = getBufferedImageFromPath(path);
 		this.width = image.getWidth();
 		this.height = image.getHeight();
+		//System.out.println("ffwf");
 		processBufferedImage(0, 0);
+
 	}
+
 
 	private void processBufferedImage(int startX, int StartY) {
 		int[] pixels_raw = new int[width * height * 4];
@@ -46,6 +51,7 @@ public class Texture {
 				pixels.put((byte) ((pixel >> 24) & 0xFF));// Alpha
 			}
 		}
+
 		pixels.flip();
 		id = GL46.glGenTextures();
 		GL46.glBindTexture(GL46.GL_TEXTURE_2D, id);

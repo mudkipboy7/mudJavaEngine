@@ -46,9 +46,13 @@ public class InputHandler {
 
 	public boolean queryIsInputKeyPressed(InputKey key) {
 		if (key.getIsMouseKey()) {
-			return queryIsMouseButtonInState(GLFW.GLFW_PRESS, key.getGlfwValue());
+			boolean x = queryIsMouseButtonInState(GLFW.GLFW_PRESS, key.getGlfwValue());
+			//System.out.println(x);
+			return x;
 		}
-		return queryIsKeyInState(GLFW.GLFW_PRESS, key.getGlfwValue());
+		boolean x = queryIsKeyInState(GLFW.GLFW_PRESS, key.getGlfwValue());
+		//System.out.println(x);
+		return x;
 	}
 
 	public long getCursor() {
