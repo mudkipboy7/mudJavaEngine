@@ -68,7 +68,7 @@ public class RendererManager {
 
 			((ArrayList<AbstractEntityObject>) getEntityManager().getLoadedEntities().clone()).forEach(entity -> {
 				stuffBeingRendered.add(new EntityRendererInstance(entity.getRenderer(), entity.levelPos, getCamera(),
-						entity.getAnimationFrame(), entity.facingLeft));
+						entity.getAnimationFrame(), entity.getShouldBeMirroredX()));
 			});
 		}
 		Collections.sort(this.stuffBeingRendered, new Comparator<AbstractRendererInstance>() {
@@ -83,15 +83,13 @@ public class RendererManager {
 		 */
 
 		if (this.getLevel() != null) {
-			Renderers.charRenderer.render(0.04F, 0.04F, -0.9F, 0.9F,
-					"Demons Killed:" + this.getLevel().getGameMain().enemiesKilled + "/" + Main.numOfEnemies);
-			//Renderers.charRenderer.render(0.04F, 0.04F, -0.9F, -0.9F,
-			//		"Entities:" + this.getLevel().getEntityManager().getLoadedEntities().size());
-			Renderers.charRenderer.render(0.04F, 0.04F, .3F, 0.9F, "FPS:" + getFPS());
-			//Renderers.charRenderer.render(0.04F, 0.04F, .3F, -0.9F,
-			//		"TPS:" + this.getLevel().getGameMain().TPStracker.getXps());
-			Renderers.charRenderer.render(0.04F, 0.04F, -0.9F, -0.9F, "Coords:" + this.getCamera().getX() + ","
-					+ this.getCamera().getY() + "," + this.getCamera().getZ());
+			// renderDebugInfo(-0.9F, 0.9F,
+			// "Demons Killed:" + this.getLevel().getGameMain().enemiesKilled + "/" +
+			// Main.numOfEnemies);
+			renderDebugInfo(-0.9F, 0.9F, "Window Size:" + "\n" + "," + "");
+			renderDebugInfo(.3F, 0.9F, "FPS:" + getFPS());
+			renderDebugInfo(-0.9F, -0.9F, "Coords:" + this.getCamera().getX() + "," + this.getCamera().getY() + ","
+					+ this.getCamera().getZ());
 		}
 		stuffBeingRendered.clear();
 		this.fpsTracker.tick();
@@ -109,6 +107,12 @@ public class RendererManager {
 
 	public Camera getCamera() {
 		return gameMain.getCamera();
+	}
+
+	private void renderDebugInfo(float x, float y, String text) {
+
+		Renderers.charRenderer.render(0.04F, 0.04F, x, y, text);
+
 	}
 
 	/*

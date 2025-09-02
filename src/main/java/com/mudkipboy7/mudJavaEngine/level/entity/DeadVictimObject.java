@@ -11,7 +11,6 @@ public class DeadVictimObject extends CreatureEntity {
 		this.height = 1F;
 		this.width = 2F;
 		this.animationFrame = 0;
-		this.facingLeft = facingLeft;
 	}
 
 	@Override

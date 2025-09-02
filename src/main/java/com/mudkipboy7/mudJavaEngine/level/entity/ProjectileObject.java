@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.mudkipboy7.mudJavaEngine.level.Level;
 import com.mudkipboy7.mudJavaEngine.level.LevelPos;
+import com.mudkipboy7.mudJavaEngine.level.physics.Direction;
 import com.mudkipboy7.mudJavaEngine.render.Renderers;
 
 public class ProjectileObject extends AbstractEntityObject {
@@ -23,7 +24,6 @@ public class ProjectileObject extends AbstractEntityObject {
 		this.lifeSpanLeft = lifeSpan;
 		entityManager.addEntity(this);
 		this.renderer = Renderers.bulletRenderer;
-		this.facingLeft = isFacingLeft;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -38,14 +38,14 @@ public class ProjectileObject extends AbstractEntityObject {
 						&& getYPos() > victim.getYPos() - height / 2 && getYPos() < victim.getYPos() + height / 2) {
 					///System.out.println("Victim killed!");
 					entityManager.deleteEntity(victim);
-					entityManager.addEntity(new DeadVictimObject(level, victim.levelPos, victim.facingLeft));
+					entityManager.addEntity(new DeadVictimObject(level, victim.levelPos, victim.direction == Direction.Left));
 
 					this.lifeSpanLeft = 0;
 				}
 			}
 		});
 		// gameMain.getRendererManager().projectiles.tryAddToList(this);
-		if (this.facingLeft) {
+		if (direction == Direction.Left) {
 			if (!this.moveX(-speedX))
 				entityManager.deleteEntity(this);
 		} else if (!this.moveX(speedX))

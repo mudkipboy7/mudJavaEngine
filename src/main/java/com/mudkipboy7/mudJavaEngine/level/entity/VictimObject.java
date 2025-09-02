@@ -16,13 +16,13 @@ public class VictimObject extends CreatureEntity {
 	@Override
 	public void tick() {
 		this.tryDoGravity();
-		float moveAmmount = this.facingLeft ? -0.02F : 0.02F;
-		if (!this.moveX(moveAmmount)) {
-			this.facingLeft = !facingLeft;
-		}
-		if (this.getYPos() < -1) {
-			this.getEntityManager().deleteEntity(this);
-		}
+		//float moveAmmount = this.facingLeft ? -0.02F : 0.02F;
+		//if (!this.moveX(moveAmmount)) {
+			//this.facingLeft = !facingLeft;
+		//}
+		//if (this.getYPos() < -1) {
+		//	this.getEntityManager().deleteEntity(this);
+		//}
 
 	}
 }

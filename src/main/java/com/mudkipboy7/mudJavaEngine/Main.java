@@ -14,11 +14,8 @@ import org.lwjgl.system.MemoryUtil;
 import com.mudkipboy7.mudJavaEngine.input.InputHandler;
 import com.mudkipboy7.mudJavaEngine.input.InputKey;
 import com.mudkipboy7.mudJavaEngine.level.Level;
-import com.mudkipboy7.mudJavaEngine.level.entity.VictimObject;
-import com.mudkipboy7.mudJavaEngine.render.AbstractRendererInstance.TextRendererInstance;
 import com.mudkipboy7.mudJavaEngine.render.Camera;
 import com.mudkipboy7.mudJavaEngine.render.RendererManager;
-import com.mudkipboy7.mudJavaEngine.render.Renderers;
 import com.mudkipboy7.mudJavaEngine.render.renderers.CharRenderer;
 
 /**
@@ -26,7 +23,7 @@ import com.mudkipboy7.mudJavaEngine.render.renderers.CharRenderer;
  */
 public final class Main implements Runnable {
 	// Game name and versioning stuff
-	private static final String GAME_NAME = "Shoot Up The UN Headquarters";
+	private static final String GAME_NAME = "mudGameTest";
 	private static String VERSION;
 	private static final boolean showVersion = true;
 
@@ -53,11 +50,15 @@ public final class Main implements Runnable {
 		init();
 
 		int x = 0;
+
+		/*
+		 * This thread runs the actual game logic.
+		 */
 		initLevel();
 		new Thread(this) {
 			@Override
 			public void run() {
-
+				
 				while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
 					input.tickInput();
 					tickStuff();
@@ -68,7 +69,7 @@ public final class Main implements Runnable {
 
 			}
 		}.start();
-
+		
 		// this.renderThread.start();
 		// Makes the game do the loop to run it
 		while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
@@ -91,7 +92,7 @@ public final class Main implements Runnable {
 
 	private double secSinceLastGameTick = 1000;
 	private double timeOfLastTick = 50;
-	private double tps = 40D;
+	private double tps = 60D;
 	public XPerSecondKeeperTracker TPStracker = new XPerSecondKeeperTracker();
 
 	private void tickStuff() {
@@ -106,8 +107,6 @@ public final class Main implements Runnable {
 				secSinceLastGameTick = 0;
 				TPStracker.tick();
 			}
-
-			// System.out.println(TPStracker.getXps());
 		}
 
 	}

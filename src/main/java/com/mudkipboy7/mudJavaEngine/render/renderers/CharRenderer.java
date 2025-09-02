@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.lwjgl.opengl.GL46;
 
@@ -67,13 +68,8 @@ public class CharRenderer extends AbstractObjectRenderer {
 	/**
 	 * Renders a single line of text
 	 * 
-	 * @param string
-	 * @param width
-	 * @param height
-	 * @param xPos
-	 * @param yPos
 	 */
-	private void render(float width, float height, float xPos, float yPos, String string) {
+	private void renderSingleLine(float width, float height, float xPos, float yPos, String string) {
 		int g = string.length();
 		char[] chars = string.toCharArray();
 		float soFar = 0;
@@ -84,18 +80,25 @@ public class CharRenderer extends AbstractObjectRenderer {
 		}
 	}
 
-	public void render(float width, float height, float xPos, float yPos, String... lines) {
-		List<String> list = Arrays.asList(lines);
+	/**
+	 * Renders multiple lines of text
+	 */
+	private void renderMultipleLines(float width, float height, float xPos, float yPos, List<String> lines) {
 		float yPosMod = yPos;
-		int g = list.size();
+		int g = lines.size();
+
 		for (int i = 0; i < g; i++) {
-			render(width, height, xPos, yPosMod, lines[i]);
+
+			renderSingleLine(width, height, xPos, yPosMod, lines.get(i));
 			yPosMod -= height * 2.2F;
 		}
-
 	}
 
-	private static void addCharToList(char character, int texId, float distadderMod) {
+	public void render(float width, float height, float xPos, float yPos, String string) {
+		renderMultipleLines(width, height, xPos, yPos, string.lines().toList());
+	}
+
+	private static void addCharToList(char character, float distadderMod) {
 		Pair<Integer, Float> pair = new Pair<Integer, Float>(((int) character), distadderMod);
 		characters.put(character, pair);
 	}
@@ -104,7 +107,7 @@ public class CharRenderer extends AbstractObjectRenderer {
 		if (characters.containsKey(character)) {
 			return characters.get(character).getKey();
 		}
-		return 0;
+		return character;
 	}
 
 	private static float getCharDistAdder(char character) {
@@ -115,89 +118,27 @@ public class CharRenderer extends AbstractObjectRenderer {
 	}
 
 	public static void initChars() {
+
+		// Only add characters here if you need to change how they render.
 		// Space
-		addCharToList(' ', 0, 1.1F);
+		addCharToList(' ', 1.1F);
 
 		// Upper-case
-		addCharToList('A', 1, 1.5F);
-		addCharToList('B', 2, 1.5F);
-		addCharToList('C', 3, 1.5F);
-		addCharToList('D', 4, 1.5F);
-		addCharToList('E', 5, 1.5F);
-		addCharToList('F', 6, 1.5F);
-		addCharToList('G', 7, 1.5F);
-		addCharToList('H', 8, 1.5F);
-		addCharToList('I', 9, 1.5F);
-		addCharToList('J', 10, 1.5F);
-		addCharToList('K', 11, 1.5F);
-		addCharToList('L', 12, 1.5F);
-		addCharToList('M', 13, 1.5F);
-		addCharToList('N', 14, 1.5F);
-		addCharToList('O', 15, 1.5F);
-		addCharToList('P', 16, 1.5F);
-		addCharToList('Q', 17, 1.5F);
-		addCharToList('R', 18, 1.5F);
-		addCharToList('S', 19, 1.5F);
-		addCharToList('T', 20, 1.5F);
-		addCharToList('U', 21, 1.5F);
-		addCharToList('V', 22, 1.5F);
-		addCharToList('W', 23, 1.5F);
-		addCharToList('X', 24, 1.5F);
-		addCharToList('Y', 25, 1.5F);
-		addCharToList('Z', 26, 1.5F);
-		// Lower-case
-		addCharToList('a', 27, 1.5F);
-		addCharToList('b', 28, 1.5F);
-		addCharToList('c', 29, 1.5F);
-		addCharToList('d', 30, 1.5F);
-		addCharToList('e', 31, 1.5F);
-		addCharToList('f', 32, 1.5F);
-		addCharToList('g', 33, 1.5F);
-		addCharToList('h', 34, 1.5F);
-		addCharToList('i', 35, 0.8F);
-		addCharToList('j', 36, 1.5F);
-		addCharToList('k', 37, 1.5F);
-		addCharToList('l', 38, 0.8F);
-		addCharToList('m', 39, 1.5F);
-		addCharToList('n', 40, 1.5F);
-		addCharToList('o', 41, 1.3F);
-		addCharToList('p', 42, 1.5F);
-		addCharToList('q', 43, 1.5F);
-		addCharToList('r', 44, 1.5F);
-		addCharToList('s', 45, 1.5F);
-		addCharToList('t', 46, 1.1F);
-		addCharToList('u', 47, 1.5F);
-		addCharToList('v', 48, 1.2F);
-		addCharToList('w', 49, 1.5F);
-		addCharToList('x', 50, 1.2F);
-		addCharToList('y', 51, 1.5F);
-		addCharToList('z', 52, 1.5F);
-		// Numbers
-		addCharToList('0', 53, 1.5F);
-		addCharToList('1', 54, 1.5F);
-		addCharToList('2', 55, 1.5F);
-		addCharToList('3', 56, 1.5F);
-		addCharToList('4', 57, 1.5F);
-		addCharToList('5', 58, 1.5F);
-		addCharToList('6', 59, 1.5F);
-		addCharToList('7', 60, 1.5F);
-		addCharToList('8', 61, 1.5F);
-		addCharToList('9', 62, 1.5F);
-		// ETC
-		addCharToList('.', 63, 1.0F);
-		addCharToList('!', 64, 1.5F);
-		addCharToList('?', 65, 1.5F);
-		addCharToList(',', 66, 1.5F);
 
-		addCharToList('+', 67, 1.5F);
-		addCharToList('-', 68, 1.5F);
-		addCharToList('*', 69, 1.5F);
-		addCharToList('÷', 70, 1.5F);
-		addCharToList('/', 71, 1.5F);
-		addCharToList('\\', 72, 1.5F);
-		addCharToList(':', 73, 1.0F);
-		addCharToList('"', 74, 2.0F);
-		addCharToList('\'', 75, 0.6F);
+		addCharToList('i', 0.8F);
+		addCharToList('l', 0.8F);
+		addCharToList('o', 1.3F);
+		addCharToList('t', 1.1F);
+		addCharToList('v', 1.2F);
+		addCharToList('x', 1.2F);
+		// Numbers
+
+		// ETC
+		addCharToList('.', 1.0F);
+
+		addCharToList(':', 1.0F);
+		addCharToList('"', 2.0F);
+		addCharToList('\'', 0.6F);
 
 	}
 

@@ -76,26 +76,4 @@ public abstract class AbstractRendererInstance<T extends AbstractObjectRenderer>
 		}
 	}
 
-	public static class TextRendererInstance extends AbstractRendererInstance<CharRenderer> {
-		String[] text;
-		float x = 0;
-		float y = 0;
-		float width = 0;
-		float height = 0;
-
-		public TextRendererInstance(CharRenderer renderer, float width, float height, float xPos, float yPos,
-				String... text) {
-			super(renderer, new LevelPos(0, 0, 1F));
-			this.text = text;
-			this.x = xPos;
-			this.y = yPos;
-			this.width = width;
-			this.height = height;
-		}
-
-		@Override
-		public void render() {
-			this.renderer.render(width, height, x, y, text);
-		}
-	}
 }

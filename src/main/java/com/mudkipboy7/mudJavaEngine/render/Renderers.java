@@ -15,7 +15,7 @@ public class Renderers {
 	public static final EntityRenderer defaultEntityRenderer = new EntityRenderer(
 			new ComplexTexture("textures/test_texture.png", 1, 1), new Color(0, 0, 0), 1.0F, 1.0F);
 	public static final EntityRenderer playerRenderer = new EntityRenderer(
-			new ComplexTexture("textures/entity/player.png", 1, 1), new Color(1, 0, 0), 1.00F, 2.00F);
+			new ComplexTexture("textures/entity/leaf.png", 6, 4), new Color(1, 0, 0), 1.45454F, 2.0F);
 	public static final EntityRenderer bulletRenderer = new EntityRenderer(
 			new ComplexTexture("textures/entity/projectile.png", 1, 1), new Color(0.7F, 0.7F, 0.7F), 0.1F, 0.1F);
 	public static final EntityRenderer victimRenderer = new EntityRenderer(

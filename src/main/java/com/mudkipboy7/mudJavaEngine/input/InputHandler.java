@@ -44,14 +44,26 @@ public class InputHandler {
 		return propertiesOfFound.contains(true);
 	}
 
+	public boolean queryIsInputKeyPressed(InputKey... keys) {
+		Boolean x = false;
+
+		for (int i = 0; i < keys.length; i++) {
+			if (queryIsInputKeyPressed(keys[i])) {
+				return true;
+			}
+		}
+		return false;
+
+	}
+
 	public boolean queryIsInputKeyPressed(InputKey key) {
 		if (key.getIsMouseKey()) {
 			boolean x = queryIsMouseButtonInState(GLFW.GLFW_PRESS, key.getGlfwValue());
-			//System.out.println(x);
+			// System.out.println(x);
 			return x;
 		}
 		boolean x = queryIsKeyInState(GLFW.GLFW_PRESS, key.getGlfwValue());
-		//System.out.println(x);
+		// System.out.println(x);
 		return x;
 	}
 

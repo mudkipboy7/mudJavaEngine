@@ -2,6 +2,7 @@ package com.mudkipboy7.mudJavaEngine.level.entity;
 
 import com.mudkipboy7.mudJavaEngine.level.Level;
 import com.mudkipboy7.mudJavaEngine.level.LevelPos;
+import com.mudkipboy7.mudJavaEngine.level.physics.Direction;
 import com.mudkipboy7.mudJavaEngine.level.tile.CollidableTile;
 import com.mudkipboy7.mudJavaEngine.level.tile.Tile;
 import com.mudkipboy7.mudJavaEngine.level.tile.TilePos;
@@ -15,7 +16,7 @@ public abstract class AbstractEntityObject {
 	protected EntityRenderer renderer = Renderers.defaultEntityRenderer;
 	protected float width = 1.0F;
 	protected float height = 1.0F;
-	public boolean facingLeft = false;
+	public Direction direction = Direction.Down;
 	public int animationFrame = 0;
 
 	public AbstractEntityObject(Level level, LevelPos levelPos) {
@@ -76,6 +77,7 @@ public abstract class AbstractEntityObject {
 
 	public boolean moveY(float ammount) {
 		float yPosOfBottom = getYPos() - (height / 2.0F);
+		float yPosOfTop = getYPos() + (height / 2.0F);
 		// float yPosOfTop = getYPos() + (height / 2.0F);
 		if (ammount == 0)
 			return false;
@@ -97,10 +99,25 @@ public abstract class AbstractEntityObject {
 					return false;
 				}
 			}
+		} else if (ammount > 0) {
+			TilePos posOfTopTile = new TilePos(getXPos(), yPosOfTop - ammount);
+			Tile temp = level.getTileTypeAt(posOfTopTile);
+			if (temp instanceof CollidableTile) {
+				CollidableTile tile = (CollidableTile) temp;
+				float yPosOfBottomOfTile = posOfTopTile.getY().floatValue() - (tile.getHitbox().getHeight() / 2.0F);
+				if (yPosOfBottomOfTile >= yPosOfTop) {
+					levelPos.moveY(yPosOfBottomOfTile + yPosOfTop);
+					return false;
+
+				} else if (yPosOfBottomOfTile < yPosOfTop) {
+					return false;
+				}
+			}
 		}
 
 		levelPos.moveY(ammount);
 		return true;
+
 	}
 
 	public boolean moveZ(float ammount) {
@@ -136,5 +153,15 @@ public abstract class AbstractEntityObject {
 
 	public int getAnimationFrame() {
 		return animationFrame;
+	}
+
+	public boolean getShouldBeMirroredX() {
+		return false;
+
+	}
+
+	public boolean getShouldBeMirroredY() {
+		return false;
+
 	}
 }
