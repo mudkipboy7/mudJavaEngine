@@ -21,7 +21,7 @@ public class TileRenderer extends AbstractObjectRenderer {
 
 	public void render(Tile tileType, float x, float y, float z, boolean mirror) {
 		// if (tileType != null) {
-
+		//System.out.println(x);
 		ComplexTexture texture = tileType.getTexture();
 		float sizeMul = -z;
 		float vertices[] = {

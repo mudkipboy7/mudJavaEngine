@@ -45,7 +45,7 @@ public class RendererManager {
 		if (gameMain.getLevel() != null) {
 			Renderers.backgroundRenderer.render(0, 0, 1.0F, 0);
 		}
-
+		int cullDist = 15;
 		/*
 		 * Everything in here is part of the game world, UI and stuff should be rendered
 		 * before or after.
@@ -63,12 +63,20 @@ public class RendererManager {
 				this.gameMain.getLevel();
 				TilePos tilePos = Level.getTilePosFromTileKey(key);
 				LevelPos screenPos = tilePos.getAsLevelPos();
-				stuffBeingRendered.add(new TileRendererInstance(id, screenPos, getCamera()));
+
+				// This is used to cull things
+				if (cullDist >= Math.abs(getCamera().getX() - screenPos.x)
+						&& cullDist >= Math.abs(getCamera().getY() - screenPos.y)) {
+					stuffBeingRendered.add(new TileRendererInstance(id, screenPos, getCamera()));
+				}
 			});
 
 			((ArrayList<AbstractEntityObject>) getEntityManager().getLoadedEntities().clone()).forEach(entity -> {
-				stuffBeingRendered.add(new EntityRendererInstance(entity.getRenderer(), entity.levelPos, getCamera(),
-						entity.getAnimationFrame(), entity.getShouldBeMirroredX()));
+				// This is used to cull things
+				if (cullDist >= Math.abs(getCamera().getX() - entity.levelPos.x)
+						&& cullDist >= Math.abs(getCamera().getY() - entity.levelPos.y)) {
+					stuffBeingRendered.add(new EntityRendererInstance(entity, getCamera()));
+				}
 			});
 		}
 		Collections.sort(this.stuffBeingRendered, new Comparator<AbstractRendererInstance>() {
@@ -86,8 +94,7 @@ public class RendererManager {
 			// renderDebugInfo(-0.9F, 0.9F,
 			// "Demons Killed:" + this.getLevel().getGameMain().enemiesKilled + "/" +
 			// Main.numOfEnemies);
-			renderDebugInfo(-0.9F, 0.9F, "Window Size:" + "\n" + "," + "");
-			renderDebugInfo(.3F, 0.9F, "FPS:" + getFPS());
+			renderDebugInfo(.3F, 0.9F, "FPS:" + getFPS() + "\n" + "TPS:" + getLevel().getGameMain().TPStracker.getXps());
 			renderDebugInfo(-0.9F, -0.9F, "Coords:" + this.getCamera().getX() + "," + this.getCamera().getY() + ","
 					+ this.getCamera().getZ());
 		}

@@ -1,6 +1,7 @@
 package com.mudkipboy7.mudJavaEngine.render;
 
 import com.mudkipboy7.mudJavaEngine.level.LevelPos;
+import com.mudkipboy7.mudJavaEngine.level.entity.AbstractEntityObject;
 import com.mudkipboy7.mudJavaEngine.level.tile.Tile;
 import com.mudkipboy7.mudJavaEngine.render.renderers.AbstractObjectRenderer;
 import com.mudkipboy7.mudJavaEngine.render.renderers.CharRenderer;
@@ -28,18 +29,18 @@ public abstract class AbstractRendererInstance<T extends AbstractObjectRenderer>
 		int textureToLoad = 0;
 		boolean mirror;
 		Camera camera;
+		AbstractEntityObject entity;
 
-		public EntityRendererInstance(EntityRenderer renderer, LevelPos levelPos, Camera camera, int textureToLoad,
-				boolean mirror) {
-			super(renderer, levelPos);
-			this.mirror = mirror;
-			this.textureToLoad = textureToLoad;
+		public EntityRendererInstance(AbstractEntityObject entity, Camera camera) {
+			super(entity.getRenderer(), entity.levelPos);
+			this.entity = entity;
 			this.camera = camera;
+
 		}
 
 		@Override
 		public void render() {
-			this.renderer.render(levelPos, camera, textureToLoad, mirror);
+			this.renderer.render(levelPos, camera, entity.getAnimationFrame(), mirror);
 		}
 
 		public int getTextureToLoad() {

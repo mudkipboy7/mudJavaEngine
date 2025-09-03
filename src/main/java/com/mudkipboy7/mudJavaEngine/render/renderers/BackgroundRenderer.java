@@ -22,6 +22,7 @@ public class BackgroundRenderer extends AbstractObjectRenderer {
 	}
 
 	public void render(float xPos, float yPos, float zPos, int animationFrame) {
+		
 		float sizeMul = 1F;
 		float vertices[] = {
 				// Each line is the cords for a vertex

@@ -25,29 +25,16 @@ public class Level {
 		this.entityManager = new EntityManager(this);
 
 		this.player = new PlayerObject(this);
-		for (int i = 0; i <= 200; i++) {
-			addTile(new TilePos(i, 0), Tile.simpleCollidableTile);
+		for (int y = 0; y <= 100; y++) {
+			for (int x = 0; x <= 100; x++) {
+				if(Math.random() >= 0.5F) {
+				addTile(new TilePos(x, y), Tile.simpleCollidableTile);
+				}
+				else {
+					addTile(new TilePos(x, y), Tile.blackTile);
+				}
+			}
 		}
-		addTile(new TilePos(0, 1), Tile.simpleCollidableTile);
-		addTile(new TilePos(0, 2), Tile.simpleCollidableTile);
-		addTile(new TilePos(0, 3), Tile.simpleCollidableTile);
-		addTile(new TilePos(0, 4), Tile.simpleCollidableTile);
-		addTile(new TilePos(0, 5), Tile.simpleCollidableTile);
-		addTile(new TilePos(200, 1), Tile.simpleCollidableTile);
-		addTile(new TilePos(200, 2), Tile.simpleCollidableTile);
-		addTile(new TilePos(200, 3), Tile.simpleCollidableTile);
-		addTile(new TilePos(200, 4), Tile.simpleCollidableTile);
-		addTile(new TilePos(200, 5), Tile.simpleCollidableTile);
-		// addTile(new TilePos(20, 1), Tile.blackTile);
-		// addTile(new TilePos(20, 2), Tile.blackTile);
-		// addTile(new TilePos(20, 3), Tile.blackTile);
-		// addTile(new TilePos(20, 4), Tile.blackTile);
-		// addTile(new TilePos(20, 5), Tile.blackTile);
-		Random random = new Random();
-		for (int i = 0; i < Main.numOfEnemies; i++) {
-			new VictimObject(this, new LevelPos(random.nextFloat() * 200.0F, 3F, 0.05F));
-		}
-		// placeUnMembers(5, 6, 7, 8, 10, 20, 24, 13, 53, 67, 53, 71, 32, 4, 8, 20, 02);
 
 	}
 

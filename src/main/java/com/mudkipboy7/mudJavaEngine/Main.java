@@ -40,10 +40,11 @@ public final class Main implements Runnable {
 
 	private RendererManager rendererManager;
 	private Level level;
-	boolean doIntro = true;
-	boolean doOutro = false;
-	public static final int numOfEnemies = 0000;
-	public int enemiesKilled = 0;
+
+
+
+	// Used to turn off threading cause it screws up graphics
+	private boolean doThreading = false;
 
 	@Override
 	public void run() {
@@ -55,25 +56,34 @@ public final class Main implements Runnable {
 		 * This thread runs the actual game logic.
 		 */
 		initLevel();
-		new Thread(this) {
-			@Override
-			public void run() {
-				
-				while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
-					input.tickInput();
-					tickStuff();
-					if (true && input.queryIsInputKeyPressed(InputKey.KEY_CLOSE)) {
-						GLFW.glfwSetWindowShouldClose(glfwWindow, true);
-					}
-				}
+		if (doThreading) {
+			new Thread(this) {
+				@Override
+				public void run() {
 
-			}
-		}.start();
-		
+					while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
+						input.tickInput();
+						tickStuff();
+						if (true && input.queryIsInputKeyPressed(InputKey.KEY_CLOSE)) {
+							GLFW.glfwSetWindowShouldClose(glfwWindow, true);
+						}
+					}
+
+				}
+			}.start();
+		}
+
 		// this.renderThread.start();
 		// Makes the game do the loop to run it
 		while (!GLFW.glfwWindowShouldClose(glfwWindow)) {
 			tickRendering();
+			if (!doThreading) {
+				input.tickInput();
+				tickStuff();
+				if (true && input.queryIsInputKeyPressed(InputKey.KEY_CLOSE)) {
+					GLFW.glfwSetWindowShouldClose(glfwWindow, true);
+				}
+			}
 		}
 	}
 
@@ -101,7 +111,7 @@ public final class Main implements Runnable {
 		secSinceLastGameTick += (currentTime - timeOfLastTick);
 		timeOfLastTick = currentTime;
 
-		if (secSinceLastGameTick >= 1D / tps) {
+		if (secSinceLastGameTick >= 1D / tps || !doThreading) {
 			if (this.level != null) {
 				level.tickEntities();
 				secSinceLastGameTick = 0;

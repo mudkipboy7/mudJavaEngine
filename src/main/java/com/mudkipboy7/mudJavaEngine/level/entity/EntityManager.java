@@ -33,9 +33,9 @@ public class EntityManager {
 	}
 
 	public void deleteEntity(AbstractEntityObject entity) {
-		if (entity instanceof VictimObject) {
-			this.level.getGameMain().enemiesKilled += 1;
-		}
-		loadedEntities.remove(entity);
+		//if (entity instanceof VictimObject) {
+		//	this.level.getGameMain().enemiesKilled += 1;
+		//}
+		//loadedEntities.remove(entity);
 	}
 }

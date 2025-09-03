@@ -18,6 +18,9 @@ public abstract class AbstractEntityObject {
 	protected float height = 1.0F;
 	public Direction direction = Direction.Down;
 	public int animationFrame = 0;
+	public boolean isRunning = false;
+	public int movementLeftInCurrent = 0;
+	public float currentMovementSpeed = 0; // how many ticks it will take to traverse the current movement
 
 	public AbstractEntityObject(Level level, LevelPos levelPos) {
 		this.level = level;
@@ -26,98 +29,17 @@ public abstract class AbstractEntityObject {
 		this.entityManager = level.getEntityManager();
 	}
 
+	@SuppressWarnings("unused")
 	public boolean moveX(float ammount) {
 
-		// float yPosOfTop = getYPos() + (height / 2.0F);
-		if (ammount == 0)
-			return false;
-		if (ammount < 0) {
-			float xPosOfLeftSide = getXPos() - (width / 2.0F);
-			TilePos posOfTileToLeft = new TilePos(xPosOfLeftSide + ammount, getYPos());
-			Tile temp = level.getTileTypeAt(posOfTileToLeft);
-			if (temp instanceof CollidableTile) {
-				CollidableTile tile = (CollidableTile) temp;
-				/*
-				 * The reason I'm doing it like this is because if I declared in the operation
-				 * it won't work in java 1.8 which is what I want to export into
-				 */
-				float xPosOfRightOfTile = posOfTileToLeft.getX().floatValue() + (tile.getHitbox().getWidth() / 2.0F);
-				// Checks to see if its inside of the tile, if it is moves it out
-				if (xPosOfRightOfTile <= xPosOfLeftSide) {
-					levelPos.moveX(xPosOfRightOfTile - xPosOfLeftSide);
-					return false;
-				} else if (xPosOfRightOfTile > xPosOfLeftSide) {
-					return false;
-				}
-			}
-		} else if (ammount > 0) {
-			float xPosOfRightSide = getXPos() + (width / 2.0F);
-			TilePos posOfTileToRight = new TilePos(xPosOfRightSide + ammount, getYPos());
-
-			Tile temp = level.getTileTypeAt(posOfTileToRight);
-			if (temp instanceof CollidableTile) {
-				/*
-				 * The reason I'm doing it like this is because if I declared in the operation
-				 * it won't work in java 1.8 which is what I want to export into
-				 */
-				CollidableTile tile = (CollidableTile) temp;
-				float xPosOfLeftOfTile = posOfTileToRight.getX().floatValue() - (tile.getHitbox().getWidth() / 2.0F);
-				// Checks to see if its inside of the tile, if it is moves it out
-				if (xPosOfLeftOfTile >= xPosOfRightSide) {
-					levelPos.moveX(xPosOfLeftOfTile - xPosOfRightSide);
-					return false;
-				} else if (xPosOfLeftOfTile < xPosOfRightSide) {
-					return false;
-				}
-			}
-		}
 		levelPos.moveX(ammount);
 		return true;
 	}
 
+	@SuppressWarnings("unused")
 	public boolean moveY(float ammount) {
-		float yPosOfBottom = getYPos() - (height / 2.0F);
-		float yPosOfTop = getYPos() + (height / 2.0F);
-		// float yPosOfTop = getYPos() + (height / 2.0F);
-		if (ammount == 0)
-			return false;
-		if (ammount < 0) {
-			TilePos posOfBottomTile = new TilePos(getXPos(), yPosOfBottom + ammount);
-			Tile temp = level.getTileTypeAt(posOfBottomTile);
-			if (temp instanceof CollidableTile) {
-				/*
-				 * The reason I'm doing it like this is because if I declared in the operation
-				 * it won't work in java 1.8 which is what I want to export into
-				 */
-				CollidableTile tile = (CollidableTile) temp;
-				float yPosOfTopOfTile = posOfBottomTile.getY().floatValue() + (tile.getHitbox().getHeight() / 2.0F);
-				// Checks to see if its inside of the tile, if it is moves it out
-				if (yPosOfTopOfTile <= yPosOfBottom) {
-					levelPos.moveY(yPosOfTopOfTile - yPosOfBottom);
-					return false;
-				} else if (yPosOfTopOfTile > yPosOfBottom) {
-					return false;
-				}
-			}
-		} else if (ammount > 0) {
-			TilePos posOfTopTile = new TilePos(getXPos(), yPosOfTop - ammount);
-			Tile temp = level.getTileTypeAt(posOfTopTile);
-			if (temp instanceof CollidableTile) {
-				CollidableTile tile = (CollidableTile) temp;
-				float yPosOfBottomOfTile = posOfTopTile.getY().floatValue() - (tile.getHitbox().getHeight() / 2.0F);
-				if (yPosOfBottomOfTile >= yPosOfTop) {
-					levelPos.moveY(yPosOfBottomOfTile + yPosOfTop);
-					return false;
-
-				} else if (yPosOfBottomOfTile < yPosOfTop) {
-					return false;
-				}
-			}
-		}
-
 		levelPos.moveY(ammount);
 		return true;
-
 	}
 
 	public boolean moveZ(float ammount) {
@@ -162,6 +84,17 @@ public abstract class AbstractEntityObject {
 
 	public boolean getShouldBeMirroredY() {
 		return false;
+	}
 
+	public boolean queueMovement(Direction direction, boolean isRunning) {
+		//if(movementLeftInCurrent )
+		return false;
+	}
+
+	public boolean Move() {
+		return false;
+	//	if(this.movementLeftInCurrent != 0) {
+		//this.movementLeftInCurrent -=currentMovementSpeed;
+		//this.currentMovementSpeed 
 	}
 }

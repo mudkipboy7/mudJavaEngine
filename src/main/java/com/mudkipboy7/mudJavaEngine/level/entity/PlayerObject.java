@@ -14,19 +14,16 @@ public class PlayerObject extends CreatureEntity {
 	private int animationTimer = 0;
 
 	public PlayerObject(Level level) {
-		super(level, new LevelPos(2, 4, -0.1F));
+		super(level, new LevelPos(50, 50, -0.1F));
 		this.width = 1.0F;
-		this.height = 2.0F;
+		this.height = 1.0F;
 		this.renderer = Renderers.playerRenderer;
 	}
 
-	private int ticksSinceLastFire = 10000000;
 
 	@Override
 	public void tick() {
 		boolean isRunning = level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_FIRE);
-		this.isAffectedByGravity = false;
-		this.ticksSinceLastFire += 1;
 		if (level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_DOWN)) {
 			this.moveY(isRunning ? -0.2F : -0.1F);
 			this.direction = Direction.Down;
@@ -47,10 +44,10 @@ public class PlayerObject extends CreatureEntity {
 			this.direction = Direction.Left;
 		}
 
-		if (!this.tryDoGravity() && level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_JUMP)) {
-			jumpyness = 0.3F;
+		//if (!this.tryDoGravity() && level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_JUMP)) {
+		//	jumpyness = 0.3F;
 
-		}
+		//}
 		if (this.cameraTrackPlayer) {
 			level.getGameMain().getCamera().copyPosFrom(levelPos, false);
 		}
@@ -87,13 +84,13 @@ public class PlayerObject extends CreatureEntity {
 		case Right:
 			return getRun(19, isRunning);
 		}
-		return 2;
+		return 1;
 	}
 
 	private int getRun(int nonMove, boolean isRunning) {
 
 		animationTimer++;
-		if (animationTimer >= 10) {
+		if (animationTimer >= 15) {
 			this.runFrame += 1;
 			if (this.runFrame == 3) {
 				this.runFrame = -1;
