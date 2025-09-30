@@ -25,17 +25,22 @@ public class Level {
 		this.entityManager = new EntityManager(this);
 
 		this.player = new PlayerObject(this);
+
 		for (int y = 0; y <= 100; y++) {
 			for (int x = 0; x <= 100; x++) {
-				if(Math.random() >= 0.5F) {
-				addTile(new TilePos(x, y), Tile.simpleCollidableTile);
-				}
-				else {
+				if (Math.random() >= 0.5F) {
+					addTile(new TilePos(x, y), Tile.simpleCollidableTile);
+				} else {
 					addTile(new TilePos(x, y), Tile.blackTile);
 				}
 			}
 		}
-
+		addTile(new TilePos(1, 1), Tile.treeTile3);
+		addTile(new TilePos(1, 2), Tile.treeTile2);
+		addTile(new TilePos(1, 3), Tile.treeTile1);
+		addTile(new TilePos(2, 1), Tile.treeTile6);
+		addTile(new TilePos(2, 2), Tile.treeTile5);
+		addTile(new TilePos(2, 3), Tile.treeTile4);
 	}
 
 	public void placeUnMembers(float... poses) {

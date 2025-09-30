@@ -14,7 +14,7 @@ public class PlayerObject extends CreatureEntity {
 	private int animationTimer = 0;
 
 	public PlayerObject(Level level) {
-		super(level, new LevelPos(50, 50, -0.1F));
+		super(level, new LevelPos(0, 0, -0.1F));
 		this.width = 1.0F;
 		this.height = 1.0F;
 		this.renderer = Renderers.playerRenderer;
@@ -23,7 +23,7 @@ public class PlayerObject extends CreatureEntity {
 
 	@Override
 	public void tick() {
-		boolean isRunning = level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_FIRE);
+		boolean isRunning = level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_RUN);
 		if (level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_DOWN)) {
 			this.moveY(isRunning ? -0.2F : -0.1F);
 			this.direction = Direction.Down;
@@ -73,7 +73,7 @@ public class PlayerObject extends CreatureEntity {
 
 	@Override
 	public int getAnimationFrame() {
-		boolean isRunning = level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_FIRE);
+		boolean isRunning = level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_RUN);
 		switch (this.direction) {
 		case Down:
 			return getRun(1, isRunning);

@@ -16,7 +16,7 @@ public class EntityRenderer extends AbstractObjectRenderer {
 	protected Color color = Color.WHITE;
 
 	public EntityRenderer(ComplexTexture texture, Color color, float width, float height) {
-		super();
+		super(); 
 		this.texture = texture;
 		this.width = width;
 		this.height = height;

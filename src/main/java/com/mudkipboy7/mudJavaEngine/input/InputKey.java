@@ -10,7 +10,7 @@ public class InputKey {
 	public static final InputKey KEY_RIGHT = new InputKey(GLFW.GLFW_KEY_RIGHT, false);
 	public static final InputKey KEY_JUMP = new InputKey(GLFW.GLFW_KEY_SPACE, false);
 	public static final InputKey KEY_CLOSE = new InputKey(GLFW.GLFW_KEY_ESCAPE, false);
-	public static final InputKey KEY_FIRE = new InputKey(GLFW.GLFW_KEY_F, false);
+	public static final InputKey KEY_RUN = new InputKey(GLFW.GLFW_KEY_Z, false);
 	
 	public static final InputKey KEY_ZOOM_IN = new InputKey(GLFW.GLFW_KEY_MINUS, false);
 	public static final InputKey KEY_ZOOM_OUT = new InputKey(GLFW.GLFW_KEY_EQUAL, false);
