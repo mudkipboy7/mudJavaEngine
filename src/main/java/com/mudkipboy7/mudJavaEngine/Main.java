@@ -44,7 +44,7 @@ public final class Main implements Runnable {
 
 
 	// Used to turn off threading cause it screws up graphics
-	private boolean doThreading = false;
+	private boolean doThreading = true;
 
 	@Override
 	public void run() {
@@ -56,6 +56,8 @@ public final class Main implements Runnable {
 		 * This thread runs the actual game logic.
 		 */
 		initLevel();
+		initLevel();
+
 		if (doThreading) {
 			new Thread(this) {
 				@Override
@@ -87,8 +89,8 @@ public final class Main implements Runnable {
 		}
 	}
 
-	private void initLevel() {
-		this.level = new Level(this);
+	public void initLevel() {
+		this.level = new Level(this, "levels/hub.mudlevel");
 	}
 
 	private void init() {
@@ -124,7 +126,7 @@ public final class Main implements Runnable {
 	private void tickRendering() {
 
 		rendererManager.renderStuff();
-
+		//System.out.println(GLFW.glfwGetWindowAttrib(glfwWindow, Windowa));
 		GLFW.glfwSwapBuffers(glfwWindow);
 		GLFW.glfwPollEvents();
 

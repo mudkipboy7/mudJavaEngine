@@ -4,16 +4,16 @@ import java.awt.Color;
 
 import org.lwjgl.opengl.GL46;
 
-import com.mudkipboy7.mudJavaEngine.render.ComplexTexture;
+import com.mudkipboy7.mudJavaEngine.render.Texture;
 
 public class BackgroundRenderer extends AbstractObjectRenderer {
-	ComplexTexture texture = null;
+	Texture texture = null;
 	float width = 1;
 	float height = 1;
 	// public static Texture texture = new Texture("textures/test_texture.png");
 	protected Color color = Color.WHITE;
 
-	public BackgroundRenderer(ComplexTexture texture, float width, float height) {
+	public BackgroundRenderer(Texture texture, float width, float height) {
 		super();
 		this.texture = texture;
 		this.width = width;

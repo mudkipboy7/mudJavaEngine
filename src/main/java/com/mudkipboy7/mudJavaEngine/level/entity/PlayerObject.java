@@ -6,6 +6,7 @@ import com.mudkipboy7.mudJavaEngine.input.InputKey;
 import com.mudkipboy7.mudJavaEngine.level.Level;
 import com.mudkipboy7.mudJavaEngine.level.LevelPos;
 import com.mudkipboy7.mudJavaEngine.level.physics.Direction;
+import com.mudkipboy7.mudJavaEngine.level.tile.Tile;
 import com.mudkipboy7.mudJavaEngine.render.Renderers;
 
 public class PlayerObject extends CreatureEntity {
@@ -13,13 +14,12 @@ public class PlayerObject extends CreatureEntity {
 	private int runFrame = 0;
 	private int animationTimer = 0;
 
-	public PlayerObject(Level level) {
-		super(level, new LevelPos(0, 0, -0.1F));
+	public PlayerObject(Level level, LevelPos pos) {
+		super(level, pos);
 		this.width = 1.0F;
 		this.height = 1.0F;
 		this.renderer = Renderers.playerRenderer;
 	}
-
 
 	@Override
 	public void tick() {
@@ -44,10 +44,11 @@ public class PlayerObject extends CreatureEntity {
 			this.direction = Direction.Left;
 		}
 
-		//if (!this.tryDoGravity() && level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_JUMP)) {
-		//	jumpyness = 0.3F;
+		// if (!this.tryDoGravity() &&
+		// level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_JUMP)) {
+		// jumpyness = 0.3F;
 
-		//}
+		// }
 		if (this.cameraTrackPlayer) {
 			level.getGameMain().getCamera().copyPosFrom(levelPos, false);
 		}
@@ -68,11 +69,12 @@ public class PlayerObject extends CreatureEntity {
 
 		else if (this.level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_ZOOM_IN))
 			level.getGameMain().getCamera().moveZ(0.01F);
-
+		else if (this.level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_PLACE))
+			level.addTile(this.levelPos.getAsTilePos(), 1);
 	}
 
 	@Override
-	public int getAnimationFrame() {
+	public int getAnimationFrame() { 
 		boolean isRunning = level.getGameMain().input.queryIsInputKeyPressed(InputKey.KEY_RUN);
 		switch (this.direction) {
 		case Down:

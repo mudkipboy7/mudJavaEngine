@@ -1,91 +1,51 @@
 package com.mudkipboy7.mudJavaEngine.render;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
+import java.util.Arrays;
 
-import javax.imageio.ImageIO;
+import com.electronwill.nightconfig.core.CommentedConfig;
+import com.mudkipboy7.mudJavaEngine.FileGetter;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL46;
-
-import com.mudkipboy7.mudJavaEngine.Main;
-
-public class Texture {
-	public static final Texture defaultTexture = new Texture("textures/test_texture.png");
-	private int id;
-	private int width = 0;
-	private int height = 0;
-
-	private BufferedImage image = null;
-
-	private Texture(String path, int startX, int startY, int width, int height) {
-		image = getBufferedImageFromPath(path);
-		this.width = width;
-		this.height = height;
-		processBufferedImage(startX, startY);
-	}
-
+/**
+ * Originally a specialized class for animating textures. But now the normal
+ * class because now it pretty much acts the exact same but better
+ */
+public class Texture extends AbstractTexture {
+	int framesPerWidth = 0;
+	int framesPerHeight = 0;
 
 	public Texture(String path) {
-		image = getBufferedImageFromPath(path);
-		this.width = image.getWidth();
-		this.height = image.getHeight();
-		//System.out.println("ffwf");
-		processBufferedImage(0, 0);
+		super(path);
+		CommentedConfig x = FileGetter.getTOML(path + ".toml");
+		if (x != null) {
+			framesPerWidth = x.getInt("fpw");
+			framesPerHeight = x.getInt("fph");
 
-	}
-
-
-	private void processBufferedImage(int startX, int StartY) {
-		int[] pixels_raw = new int[width * height * 4];
-		pixels_raw = image.getRGB(0, 0, width, height, null, 0, width);
-		ByteBuffer pixels = BufferUtils.createByteBuffer(width * height * 4);
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				int pixel = pixels_raw[i * height + j];
-				pixels.put((byte) ((pixel >> 16) & 0xFF)); // Red
-				pixels.put((byte) ((pixel >> 8) & 0xFF));// Blue
-				pixels.put((byte) (pixel & 0xFF));// Green
-				pixels.put((byte) ((pixel >> 24) & 0xFF));// Alpha
-			}
+			return;
 		}
-
-		pixels.flip();
-		id = GL46.glGenTextures();
-		GL46.glBindTexture(GL46.GL_TEXTURE_2D, id);
-		GL46.glTexParameterf(GL46.GL_TEXTURE_2D, GL46.GL_TEXTURE_MIN_FILTER, GL46.GL_NEAREST);
-		GL46.glTexParameterf(GL46.GL_TEXTURE_2D, GL46.GL_TEXTURE_MAG_FILTER, GL46.GL_NEAREST);
-		GL46.glTexImage2D(GL46.GL_TEXTURE_2D, 0, GL46.GL_RGBA, width, height, 0, GL46.GL_RGBA, GL46.GL_UNSIGNED_BYTE,
-				pixels);
+		this.framesPerWidth = 1;
+		this.framesPerHeight = 1;
 
 	}
 
-	public void bind() {
-		GL46.glBindTexture(GL46.GL_TEXTURE_2D, id);
-	}
+	public float[] getCoordsOfFrame(int frameNum, boolean mirror) {
+		float modY = ((int) frameNum / framesPerWidth);
+		float modX = frameNum - (framesPerWidth * modY);
 
-	private BufferedImage getBufferedImageFromPath(String path) {
-		InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(path);
-		BufferedImage bufferedImage = null;
-		try {
-			bufferedImage = ImageIO.read(inputStream);
-		} catch (IOException e) {
-			e.printStackTrace();
+		float textureCoords[] = { //
+				modX / framesPerWidth, modY / framesPerHeight, //
+				(modX + 1.0F) / framesPerWidth, modY / framesPerHeight, //
+				(modX + 1.0F) / framesPerWidth, (modY + 1.0F) / framesPerHeight, //
+				modX / framesPerWidth, (modY + 1.0F) / framesPerHeight };//
+		if (mirror) {
+			float a = textureCoords[0];
+			float b = textureCoords[2];
+			float c = textureCoords[4];
+			float d = textureCoords[6];
+			textureCoords[0] = b;
+			textureCoords[2] = d;
+			textureCoords[4] = a;
+			textureCoords[6] = c;
 		}
-		return bufferedImage;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public int getId() {
-		return id;
+		return textureCoords;
 	}
 }

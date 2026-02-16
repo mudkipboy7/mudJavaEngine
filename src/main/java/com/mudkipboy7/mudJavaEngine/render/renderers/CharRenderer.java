@@ -9,16 +9,16 @@ import java.util.stream.Stream;
 import org.lwjgl.opengl.GL46;
 
 import com.mudkipboy7.mudJavaEngine.Pair;
-import com.mudkipboy7.mudJavaEngine.render.ComplexTexture;
+import com.mudkipboy7.mudJavaEngine.render.Texture;
 
 public class CharRenderer extends AbstractObjectRenderer {
-	ComplexTexture texture = null;
+	Texture texture = null;
 	// public static Texture texture = new Texture("textures/test_texture.png");
 	protected Color color = Color.WHITE;
 
 	public static final HashMap<Character, Pair<Integer, Float>> characters = new HashMap<Character, Pair<Integer, Float>>();;
 
-	public CharRenderer(ComplexTexture texture, Color color) {
+	public CharRenderer(Texture texture, Color color) {
 		super();
 		this.texture = texture;
 	}

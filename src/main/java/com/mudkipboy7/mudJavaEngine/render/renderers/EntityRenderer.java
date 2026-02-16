@@ -6,16 +6,16 @@ import org.lwjgl.opengl.GL46;
 
 import com.mudkipboy7.mudJavaEngine.level.LevelPos;
 import com.mudkipboy7.mudJavaEngine.render.Camera;
-import com.mudkipboy7.mudJavaEngine.render.ComplexTexture;
+import com.mudkipboy7.mudJavaEngine.render.Texture;
 
 public class EntityRenderer extends AbstractObjectRenderer {
-	ComplexTexture texture = null;
+	Texture texture = null;
 	float width = 1;
 	float height = 1;
 	// public static Texture texture = new Texture("textures/test_texture.png");
 	protected Color color = Color.WHITE;
 
-	public EntityRenderer(ComplexTexture texture, Color color, float width, float height) {
+	public EntityRenderer(Texture texture, Color color, float width, float height) {
 		super(); 
 		this.texture = texture;
 		this.width = width;

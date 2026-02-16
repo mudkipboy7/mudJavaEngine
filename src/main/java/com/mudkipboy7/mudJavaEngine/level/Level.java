@@ -1,6 +1,9 @@
 package com.mudkipboy7.mudJavaEngine.level;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import com.mudkipboy7.mudJavaEngine.Main;
@@ -16,31 +19,29 @@ public class Level {
 	private EntityManager entityManager;
 	private PlayerObject player;
 	// private TileManager tileManager;
-	public static int height = 100;
+	public static int height = 10;
+
 	// First is pos, second is id in pos
 	private HashMap<Integer, Integer> loadedTiles = new HashMap<>();
 
-	public Level(Main gameMain) {
+	public Level(Main gameMain, String areaPath) {
 		this.gameMain = gameMain;
 		this.entityManager = new EntityManager(this);
+		this.player = new PlayerObject(this, new LevelPos(10, 0, -0.1F));
 
-		this.player = new PlayerObject(this);
-
-		for (int y = 0; y <= 100; y++) {
-			for (int x = 0; x <= 100; x++) {
-				if (Math.random() >= 0.5F) {
-					addTile(new TilePos(x, y), Tile.simpleCollidableTile);
-				} else {
-					addTile(new TilePos(x, y), Tile.blackTile);
-				}
+		InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(areaPath);
+		byte[] loadedFile = null;
+		try {
+			loadedFile = inputStream.readAllBytes();
+		} catch (IOException e) {
+		}
+		if (loadedFile != null) {
+			height = loadedFile[0];
+			for (int i = 1; i < loadedFile.length; i++) {
+				addTile(i - 1, loadedFile[i]);
 			}
 		}
-		addTile(new TilePos(1, 1), Tile.treeTile3);
-		addTile(new TilePos(1, 2), Tile.treeTile2);
-		addTile(new TilePos(1, 3), Tile.treeTile1);
-		addTile(new TilePos(2, 1), Tile.treeTile6);
-		addTile(new TilePos(2, 2), Tile.treeTile5);
-		addTile(new TilePos(2, 3), Tile.treeTile4);
+		System.out.println(getByteValue());
 	}
 
 	public void placeUnMembers(float... poses) {
@@ -66,11 +67,15 @@ public class Level {
 		return player;
 	}
 
+	public void addTile(int pos, int id) {
+		loadedTiles.put(pos, id);
+	}
+
 	public boolean addTile(TilePos tilePos, int id) {
 
 		if (!(tilePos.x < 0 || tilePos.y < 0 || tilePos.y >= height)) {
 			Integer posNum = (height * tilePos.getX()) + (tilePos.getY());
-			loadedTiles.put(posNum, id);
+			addTile(posNum, id);
 			// dwsSystem.out.println("X:" + tilePos.x + " Y:" + tilePos.y);
 			return true;
 		}
@@ -111,4 +116,13 @@ public class Level {
 		return new TilePos(x, y);
 	}
 
+	public String getByteValue() {
+		String x = String.valueOf((char) (byte) height);
+		getLoadedTiles().forEach((pos, value) -> {
+			String y = String.valueOf((char) (byte) (int) value);
+			x.concat(y);
+		});
+		return x;
+
+	}
 }

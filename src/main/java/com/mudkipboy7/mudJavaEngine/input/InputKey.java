@@ -11,9 +11,11 @@ public class InputKey {
 	public static final InputKey KEY_JUMP = new InputKey(GLFW.GLFW_KEY_SPACE, false);
 	public static final InputKey KEY_CLOSE = new InputKey(GLFW.GLFW_KEY_ESCAPE, false);
 	public static final InputKey KEY_RUN = new InputKey(GLFW.GLFW_KEY_Z, false);
-	
+
 	public static final InputKey KEY_ZOOM_IN = new InputKey(GLFW.GLFW_KEY_MINUS, false);
 	public static final InputKey KEY_ZOOM_OUT = new InputKey(GLFW.GLFW_KEY_EQUAL, false);
+
+	public static final InputKey KEY_PLACE = new InputKey(GLFW.GLFW_KEY_0, false);
 
 	/**
 	 * Defines a specific input value

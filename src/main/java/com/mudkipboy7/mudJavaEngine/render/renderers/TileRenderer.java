@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL46;
 import com.mudkipboy7.mudJavaEngine.level.LevelPos;
 import com.mudkipboy7.mudJavaEngine.level.tile.Tile;
 import com.mudkipboy7.mudJavaEngine.render.Camera;
-import com.mudkipboy7.mudJavaEngine.render.ComplexTexture;
+import com.mudkipboy7.mudJavaEngine.render.Texture;
 
 public class TileRenderer extends AbstractObjectRenderer {
 	static float width = 1.0F;
@@ -22,7 +22,7 @@ public class TileRenderer extends AbstractObjectRenderer {
 	public void render(Tile tileType, float x, float y, float z, boolean mirror) {
 		// if (tileType != null) {
 		//System.out.println(x);
-		ComplexTexture texture = tileType.getTexture();
+		Texture texture = tileType.getTexture();
 		float sizeMul = -z;
 		float vertices[] = {
 				// Each line is the cords for a vertex

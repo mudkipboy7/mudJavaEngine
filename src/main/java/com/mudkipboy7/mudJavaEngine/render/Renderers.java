@@ -13,19 +13,18 @@ public class Renderers {
 	 * Entity
 	 */
 	public static final EntityRenderer defaultEntityRenderer = new EntityRenderer(
-			new ComplexTexture("textures/test_texture.png", 1, 1), new Color(0, 0, 0), 1.0F, 1.0F);
+			new Texture("textures/test_texture.png"), new Color(0, 0, 0), 1.0F, 1.0F);
 	public static final EntityRenderer playerRenderer = new EntityRenderer(
-			new ComplexTexture("textures/entity/leaf.png", 6, 4), new Color(1, 0, 0), 1.0F, 1.375F);
+			new Texture("textures/entity/leaf.png"), new Color(1, 0, 0), 1.0F, 1.375F);
 	public static final EntityRenderer bulletRenderer = new EntityRenderer(
-			new ComplexTexture("textures/entity/projectile.png", 1, 1), new Color(0.7F, 0.7F, 0.7F), 0.1F, 0.1F);
+			new Texture("textures/entity/projectile.png"), new Color(0.7F, 0.7F, 0.7F), 0.1F, 0.1F);
 	public static final EntityRenderer victimRenderer = new EntityRenderer(
-			new ComplexTexture("textures/entity/victim.png", 1, 1), new Color(1, 1, 0), 1.0F, 2.0F);
+			new Texture("textures/entity/victim.png"), new Color(1, 1, 0), 1.0F, 2.0F);
 	public static final EntityRenderer deadVictimRenderer = new EntityRenderer(
-			new ComplexTexture("textures/entity/dead_victim.png", 1, 1), new Color(1, 1, 0), 2.0F, 1.0F);
+			new Texture("textures/entity/dead_victim.png"), new Color(1, 1, 0), 2.0F, 1.0F);
 	/*
 	 * Tile
 	 */
-	public static Texture texture = new Texture("textures/tileset.png");
 	public static final TileRenderer normalTileRenderer = new TileRenderer();
 
 	/*
@@ -35,8 +34,8 @@ public class Renderers {
 			1F, 1F);
 
 	public static final BackgroundRenderer backgroundRenderer = new BackgroundRenderer(
-			new ComplexTexture("textures/tileset.png", 8, 8), 1F, 1F);
-	public static final CharRenderer charRenderer = new CharRenderer(new ComplexTexture("textures/mudfont0.png", 16, 16, true),
+			new Texture("textures/tileset.png"), 1F, 1F);
+	public static final CharRenderer charRenderer = new CharRenderer(new Texture("textures/mudfont0.png"),
 			new Color(0, 0.05F, 1));
 
 }
