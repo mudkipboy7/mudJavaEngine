@@ -41,7 +41,7 @@ public class Level {
 				addTile(i - 1, loadedFile[i]);
 			}
 		}
-		System.out.println(getByteValue());
+		//System.out.println(getByteValue());
 	}
 
 	public void placeUnMembers(float... poses) {
