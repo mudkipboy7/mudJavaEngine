@@ -1,8 +1,6 @@
 package com.mudkipboy7.mudJavaEngine;
 
 import java.nio.IntBuffer;
-import java.util.Date;
-import java.util.Timer;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -28,9 +26,7 @@ public final class Main implements Runnable {
 	private static final boolean showVersion = true;
 
 	// Window stuff
-	private long glfwWindow = 0L;
-	private static final int windowWidth = 1000;
-	private static final int windowHeight = 1000;
+	public long glfwWindow = 0L;
 	private Camera cameraPos;
 
 	// Input stuff
@@ -41,15 +37,12 @@ public final class Main implements Runnable {
 	private RendererManager rendererManager;
 	private Level level;
 
-
-
 	// Used to turn off threading cause it screws up graphics
 	private boolean doThreading = true;
 
 	@Override
 	public void run() {
 		init();
-
 
 		/*
 		 * This thread runs the actual game logic.
@@ -122,9 +115,7 @@ public final class Main implements Runnable {
 	}
 
 	private void tickRendering() {
-
 		rendererManager.renderStuff();
-		//System.out.println(GLFW.glfwGetWindowAttrib(glfwWindow, Windowa));
 		GLFW.glfwSwapBuffers(glfwWindow);
 		GLFW.glfwPollEvents();
 
@@ -138,7 +129,7 @@ public final class Main implements Runnable {
 		GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
 		GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
 		String windowName = showVersion ? GAME_NAME + "-" + VERSION : GAME_NAME;
-		glfwWindow = GLFW.glfwCreateWindow(windowWidth, windowHeight, windowName, MemoryUtil.NULL, MemoryUtil.NULL);
+		glfwWindow = GLFW.glfwCreateWindow(1000, 1000, windowName, MemoryUtil.NULL, MemoryUtil.NULL);
 		if (glfwWindow == MemoryUtil.NULL)
 			throw new RuntimeException("Failed to create the GLFW window");
 		// Makes it appear centered on the screen
@@ -172,10 +163,6 @@ public final class Main implements Runnable {
 		return level;
 	}
 
-	public static float getAspectRatio() {
-		return ((float) windowWidth) / ((float) windowWidth);
-
-	}
 
 	/**
 	 * The main() method for the program.

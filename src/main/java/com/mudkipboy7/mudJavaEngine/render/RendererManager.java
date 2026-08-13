@@ -41,6 +41,17 @@ public class RendererManager {
 		GL46.glEnable(GL46.GL_DEPTH_TEST);
 		GL46.glBlendFunc(GL46.GL_SRC_ALPHA, GL46.GL_ONE_MINUS_SRC_ALPHA);
 		GL46.glEnable(GL46.GL_BLEND);
+		// Resizes the viewport to scale
+		int[] x = { 1 };
+		int[] y = { 1 };
+		GLFW.glfwGetWindowSize(gameMain.glfwWindow, x, y);
+		int width = x[0];
+		int height = y[0];
+		GL46.glViewport((width/ 2 - height/ 2) , 0, height, height);
+		
+		
+		
+		
 		Renderers.solidColorBackgroundRenderer.render(0, 0, 1);
 		if (gameMain.getLevel() != null) {
 			Renderers.backgroundRenderer.render(0, 0, 1.0F, 0);
@@ -94,7 +105,8 @@ public class RendererManager {
 			// renderDebugInfo(-0.9F, 0.9F,
 			// "Demons Killed:" + this.getLevel().getGameMain().enemiesKilled + "/" +
 			// Main.numOfEnemies);
-			renderDebugInfo(.3F, 0.9F, "FPS:" + getFPS() + "\n" + "TPS:" + getLevel().getGameMain().TPStracker.getXps());
+			renderDebugInfo(.3F, 0.9F,
+					"FPS:" + getFPS() + "\n" + "TPS:" + getLevel().getGameMain().TPStracker.getXps());
 			renderDebugInfo(-0.9F, -0.9F, "Coords:" + this.getCamera().getX() + "," + this.getCamera().getY() + ","
 					+ this.getCamera().getZ());
 		}

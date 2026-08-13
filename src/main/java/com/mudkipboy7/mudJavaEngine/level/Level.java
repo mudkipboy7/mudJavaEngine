@@ -42,7 +42,6 @@ public class Level {
 				addTile(i - 1, loadedFile[i]);
 			}
 		}
-		System.out.println(getByteValue());
 	}
 
 	public void placeUnMembers(float... poses) {
@@ -120,7 +119,7 @@ public class Level {
 		byte[] x = {};
 		getLoadedTiles().forEach((pos, value) -> {
 			String y = String.valueOf((char) (byte) (int) value);
-	
+
 		});
 		x[0] = 1;
 		return x;
