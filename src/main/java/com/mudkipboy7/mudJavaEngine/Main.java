@@ -48,7 +48,7 @@ public final class Main implements Runnable {
 		 * This thread runs the actual game logic.
 		 */
 		initLevel();
-
+		FileGetter.getFile("sounds/joviandim_music");
 		if (doThreading) {
 			new Thread(this) {
 				@Override

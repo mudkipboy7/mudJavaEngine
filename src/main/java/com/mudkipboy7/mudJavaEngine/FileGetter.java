@@ -12,9 +12,13 @@ import com.electronwill.nightconfig.core.CommentedConfig;
 import com.electronwill.nightconfig.toml.TomlParser;
 
 public class FileGetter {
+	public static InputStream getFile(String filename) {
+		InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(filename);
+		return inputStream;
+	}
 
 	public static CommentedConfig getTOML(InputStream inputStream) {
-		if(inputStream == null) {
+		if (inputStream == null) {
 			return null;
 		}
 		TomlParser tomlParser = new TomlParser();
@@ -22,8 +26,7 @@ public class FileGetter {
 	}
 
 	public static CommentedConfig getTOML(String filename) {
-		InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(filename);
-		return getTOML(inputStream);
+		return getTOML(getFile(filename));
 	}
 
 	public static InputStream getFileFromInternet(String loc) {
