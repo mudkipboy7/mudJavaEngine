@@ -2,6 +2,7 @@ package com.mudkipboy7.mudJavaEngine.level;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -41,12 +42,11 @@ public class Level {
 				addTile(i - 1, loadedFile[i]);
 			}
 		}
-		//System.out.println(getByteValue());
+		System.out.println(getByteValue());
 	}
 
 	public void placeUnMembers(float... poses) {
 		for (int i = 0; i < poses.length; i++) {
-			System.out.println();
 			new VictimObject(this, new LevelPos(poses[i], 3, 0.05F));
 		}
 	}
@@ -116,12 +116,13 @@ public class Level {
 		return new TilePos(x, y);
 	}
 
-	public String getByteValue() {
-		String x = String.valueOf((char) (byte) height);
+	public byte[] getByteValue() {
+		byte[] x = {};
 		getLoadedTiles().forEach((pos, value) -> {
 			String y = String.valueOf((char) (byte) (int) value);
-			x.concat(y);
+	
 		});
+		x[0] = 1;
 		return x;
 
 	}

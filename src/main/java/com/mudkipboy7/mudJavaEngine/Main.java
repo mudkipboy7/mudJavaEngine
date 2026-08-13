@@ -50,12 +50,10 @@ public final class Main implements Runnable {
 	public void run() {
 		init();
 
-		int x = 0;
 
 		/*
 		 * This thread runs the actual game logic.
 		 */
-		initLevel();
 		initLevel();
 
 		if (doThreading) {
